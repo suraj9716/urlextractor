@@ -3,7 +3,19 @@ import axios from 'axios';
 import cors from 'cors';
 
 const app = express();
-app.use(cors());
+
+// Allow both local dev and production frontend
+app.use(
+  cors({
+    origin: [
+      'http://localhost:4200',
+      'https://lootersisland.com' // replace with deployed Angular URL
+    ],
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type']
+  })
+);
+
 app.use(express.json());
 
 app.post('/api/unshorten', async (req, res) => {
